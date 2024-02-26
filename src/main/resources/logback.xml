@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_PATTERN"
+		value="%date{yyyy-MM-dd HH:mm:ss.SSS}%5p %m%n" />
+	<property name="LOG_PATTERN_CDR" value="%m%n" />
+	<property name="logpath" value="${LOGPATH}/logs" />
+	<property name="cdrpath" value="${LOGPATH}/cdrs" />
+	<property name="hostname1" value="${hostname}" />
+
+	<appender name="authlog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logpath}/auth_${hostname1}.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${logpath}/auth_${hostname1}.log.%d{yyyy-MM-dd-HH}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+				${LOG_PATTERN}
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="autherrorlog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logpath}/auth_${hostname1}.err</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${logpath}/auth_${hostname1}.err.%d{yyyy-MM-dd-HH}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="cdrlog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${cdrpath}/auth_${hostname1}.txt</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${cdrpath}/auth_${hostname1}.txt.%d{yyyy-MM-dd-HH}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${LOG_PATTERN_CDR}</pattern>
+		</encoder>
+	</appender>
+
+	
+	<logger name="com.ashield.logging.Logging" level="DEBUG"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="authlog"/>
+	</logger>
+
+	<logger name="com.ashield.logging.ErrorLogging" level="DEBUG"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="autherrorlog"/>
+	</logger>
+
+	<logger name="com.ashield.logging.CDRLogging" level="DEBUG"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="cdrlog"/>
+	</logger>
+	<logger name="com.ashield.logging.CDRgetTxnId" level="DEBUG"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="cdrlog"/>
+	</logger>
+	<logger name="com.ashield.logging.CDRasAuth" level="DEBUG"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="cdrlog"/>
+	</logger>
+
+	<logger name="com.ashield.logging.CDRgetNumber" level="DEBUG"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="cdrlog"/>
+	</logger>
+
+	<logger name="com.ashield.logging.CDRsetMsisdn" level="DEBUG"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="cdrlog"/>
+	</logger>
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern> %d{HH:mm:ss.SSS}
+				[%t] %-5level %logger{36} - %msg%n </Pattern>
+		</layout>
+	</appender>
+	<root
+		level="DEBUG">
+		<appender-ref ref="CONSOLE"/>
+	</root>
+
+</configuration>

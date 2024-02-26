@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "ashield.authreq.valid.time",
+  "type": "java.lang.String",
+  "description": "A description for 'ashield.authreq.valid.time'"
+}]}
